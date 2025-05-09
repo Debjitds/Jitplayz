@@ -6,7 +6,7 @@ const urlsToCache = [
   '/',            // Home page (App shell)
   '/index.html',  // Main HTML file
   '/styles.css',  // CSS fileconst CACHE_NAME = 'calendar-app-cache-v1';
-const BASE_PATH = '/'; // Adjust this based on your deployment path
+const BASE_PATH = './'; // Adjust this based on your deployment path
 
 const ASSETS_TO_CACHE = [
   BASE_PATH,
