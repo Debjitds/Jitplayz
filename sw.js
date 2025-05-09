@@ -1,5 +1,5 @@
 // Naya cache version - update ke saath
-const CACHE_NAME = 'calendar-app-cache-v3';
+const CACHE_NAME = 'calendar-app-cache-v4';
 
 // Updated resources, agar koi naya asset add hua ho, to URL update kar sakte hain
 const urlsToCache = [
@@ -18,7 +18,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
   
   event.waitUntil(
-    caches.open(calendar-app-cache-v3).then((cache) => {
+    caches.open(calendar-app-cache-v4).then((cache) => {
       console.log('[Service Worker] Caching new resources');
       return cache.addAll(urlsToCache);
     })
