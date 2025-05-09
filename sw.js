@@ -18,7 +18,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
   
   event.waitUntil(
-    caches.open(calendar-app-cache-v4).then((cache) => {
+    caches.open('calendar-app-cache-v4').then((cache) => {
       console.log('[Service Worker] Caching new resources');
       return cache.addAll(urlsToCache);
     })
@@ -33,7 +33,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((name) => {
-          if (name !== calendar-app-cache-v3) {
+          if (name !== 'calendar-app-cache-v3') {
             console.log('[Service Worker] Deleting old cache:', name);
             return caches.delete(name);
           }
