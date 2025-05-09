@@ -18,9 +18,15 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
   
   event.waitUntil(
-    caches.open('calendar-app-cache-v3').then((cache) => {
+    caches.open(calendar-app-cache-v3).then((cache) => {
       console.log('[Service Worker] Caching new resources');
-      return cache.addAll(urlsToCache);
+      return cache.addAll([
+          "/",
+          "/index.html",
+          "/styles.css",
+          "/script.js",
+          "/logo.png" // Make sure this file exists and is accessible
+        ]);
     })
   );
 });
@@ -33,7 +39,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((name) => {
-          if (name !== 'calendar-app-cache-v1') {
+          if (name !== calendar-app-cache-v1) {
             console.log('[Service Worker] Deleting old cache:', name);
             return caches.delete(name);
           }
