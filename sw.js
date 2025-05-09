@@ -13,6 +13,10 @@ const urlsToCache = [
 // Install event mein resource caching aur immediate activation ke liye skipWaiting() ka use
 // Install event mein resource caching aur immediate activation ke liye skipWaiting() ka use
 self.addEventListener("install", (event) => {
+  console.log('[Service Worker] Install - New Version');
+  
+  // Naya SW turant activate ho jaaye
+  self.skipWaiting();
   event.waitUntil(
     caches.open("calendar-app-cache-v4") // Replace 'v1' with your cache name
       .then((cache) => {
