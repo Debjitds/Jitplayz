@@ -1,5 +1,5 @@
 // Naya cache version - update ke saath
-const CACHE_NAME = 'calendar-app-cache-v3';
+const CACHE_NAME = 'calendar-app-cache-v4';
 
 // Updated resources, agar koi naya asset add hua ho, to URL update kar sakte hain
 const urlsToCache = [
@@ -12,26 +12,33 @@ const urlsToCache = [
 
 // Install event mein resource caching aur immediate activation ke liye skipWaiting() ka use
 // Install event mein resource caching aur immediate activation ke liye skipWaiting() ka use
-self.addEventListener('install', (event) => {
-  console.log('[Service Worker] Install - New Version');
-
-  // Naya SW turant activate ho jaaye
-  self.skipWaiting();
-
+self.addEventListener("install", (event) => {
   event.waitUntil(
-    // Enclose the cache name in quotes
-    caches.open('calendar-app-cache-v3').then((cache) => {
-      console.log('[Service Worker] Caching new resources');
-      return cache.addAll([
-          "/",
-          "/index.html",
-          "/styles.css",
-          "/script.js",
-          "/logo.png" // Make sure this file exists and is accessible
+    caches.open("calendar-app-cache-v4") // Replace 'v1' with your cache name
+      .then((cache) => {
+        return cache.addAll([
+          // List of URLs to cache
+          '/',
+          '/index.html',
+          '/styles.css',
+          '/script.js',
+          '/logo.png'
+          // Add all other assets you want to cache
         ]);
-    })
+      })
+      .catch((error) => {
+        // Log the error to the console for debugging
+        console.error('Cache addAll failed:', error);
+        // You might want to perform other error handling here,
+        // like skipping caching certain assets or retrying.
+        // Depending on your needs, you might even want to
+        // reject the installation by throwing the error or
+        // preventing the event from completing.
+      })
   );
 });
+
+// Add other service worker event listeners (activate, fetch, etc.) below this
 
 // Activate event mein purane cache ko clean karo aur new SW ko sabhi clients pe turant claim karo
 self.addEventListener('activate', (event) => {
@@ -42,7 +49,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         cacheNames.map((name) => {
           // Wrap the cache name in quotes to treat it as a string
-          if (name !== 'calendar-app-cache-v1') {
+          if (name !== 'calendar-app-cache-v3') {
             console.log('[Service Worker] Deleting old cache:', name);
             return caches.delete(name);
           }
