@@ -1,0 +1,990 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic');
+
+:root {
+  --primary-color: #0a0af9;
+  --text-color: #000; 
+  --bg-color: #fff;
+  --calender: #fdfcfc;
+  --fade-color: #ccc;
+  --boxx-coloor: rgba(0, 0, 0, 0.1);
+  --week: #fdfcfc;
+  --color-1: #fff;
+  --accent-color: #006aff;
+  --sun-light: #ffff4394;
+  --moon-light: #ffffff75;
+}
+
+.dark {
+  --primary-color: #0a0af9;
+  --text-color: #fff; 
+  --bg-color: #000; 
+  --calender: #212121;
+  --fade-color: #ccc;
+  --boxx-coloor: rgba(0, 0, 0, 0.1);
+  --week: #fdfcfc;
+  --color-1: #000; 
+  --accent-color: #006aff;
+}
+
+body {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* ...other existing styles... */
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* --- Wallpaper Styles --- */
+.wallpaper-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: #ffc04a; /* Day Theme Wallpaper */
+  transition: background-color 1.5s linear;
+}
+
+.wallpaper-container::before {
+  /* Stars */
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("img/stars-1.png") no-repeat center top;
+  background-size: cover;
+  opacity: 0;
+  transition: opacity 1s linear, filter 1s linear;
+  z-index: 10; /* Ensure stars are on top */
+}
+
+.wallpaper-container.dark {
+  background-color: #405c71; /* Night Theme Wallpaper */
+}
+
+.wallpaper-container.dark::before {
+  opacity: 1;
+  filter: brightness(2);
+}
+
+/* --- End Wallpaper Styles --- */
+
+/* --- Wallpaper Element Styles --- */
+
+#grass {
+  position: absolute;
+  bottom: 7%;
+  width: 100%;
+  height: 5.1%;
+  z-index: 20;
+  background: url("img/grass2.png") repeat-x center center / contain;
+  filter: brightness(0.0);
+  transition: filter 1s linear;
+}
+
+.wallpaper-container.dark #grass {
+  filter: brightness(0.0);
+}
+
+#land {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 8%;
+  z-index: 20;
+  background: #000;
+}
+
+#tree {
+  position: absolute;
+  bottom: 7%;
+  left: 0%;
+  width: 100%;
+  height: 70%;
+  z-index: 20;
+  transform: translate(-120px, 0px);
+  background: url("img/tree4.png") no-repeat -41% bottom / contain;
+  transition: filter 1s linear; /* Add transition for tree brightness */
+}
+
+.wallpaper-container.dark #tree {
+  filter: brightness(0.5);
+}
+
+#sun {
+  z-index: 20;
+  position: absolute;
+  top: 46px;
+  right: 58px;
+  width: 110px;
+  height: 110px;
+  opacity: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 4px #ffffcd, 0 0 10px 5px #ffffcd,
+    0 0 15px 6px #ffffcd, 0 0 40px var(--sun-light),
+    0 0 50px var(--sun-light), 0 0 60px var(--sun-light),
+    0 0 70px var(--sun-light), 0 0 80px var(--sun-light),
+    0 0 90px var(--sun-light), 0 0 100px var(--sun-light),
+    0 0 110px var(--sun-light);
+  transition: right 1.2s ease-out 1s, box-shadow 1s linear, opacity 1s linear;
+}
+
+#sun img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50.7%, -50.25%);
+  height: 137%;
+  width: 137%;
+}
+
+.wallpaper-container.dark #sun {
+  right: 120%; /* Move sun off-screen */
+  box-shadow: 0 0 0 var(--sun-light);
+  transition: right 1s ease-in, box-shadow 1s linear;
+}
+
+.cloud-container {
+  z-index: 20;
+  opacity: 1;
+  transition: opacity 1.5s linear;
+}
+
+.cloud-container div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 58px;
+  width: 115px;
+  background: url("img/cloud1.png") no-repeat center center / contain;
+  opacity: 0.4;
+  z-index: 3;
+  transition: opacity 1s linear; 
+}
+
+.wallpaper-container.dark .cloud-container div {
+  opacity: 0; 
+}
+
+.birds {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: url("img/birds2.png") no-repeat center center / contain;
+  transform: scaleX(-1);
+  z-index: 20;
+  transition: transform 1.3s linear 1s;
+}
+
+.wallpaper-container.dark .birds {
+  transform: scale(0) translateY(200px);
+}
+
+.bats {
+  position: absolute;
+  z-index: 20;
+  background: url("img/bats2.png") no-repeat center center / contain;
+  width: 150px;
+  height: 150px;
+  transform: scale(0) translateY(200px);
+  transition: transform 1s linear 0.5s; 
+}
+
+.wallpaper-container.dark .bats {
+  transform: scale(1) translateY(0px);
+}
+
+.boy-sit {
+  position: absolute;
+  bottom: 5%;
+  left: 22%;
+  width: 14%;
+  height: 19%;
+  transform: translate(-12px, 16px);
+  background: url("img/sitting-boy1.png") no-repeat center center / contain;
+  transition: opacity 1s linear 0.5s;
+  filter: brightness(0.0);
+}
+
+.wallpaper-container.dark .boy-sit {
+  opacity: 0;
+}
+
+.stand-boy {
+  position: absolute;
+  bottom: 6%;
+  left: 47%;
+  width: 14%;
+  height: 22%;
+  background: url("img/stand-boy2.png") no-repeat center center / contain;
+  opacity: 0; /* Initially hidden in day mode */
+  transition: opacity 1s linear 1s;
+  height: 15%;
+}
+
+.wallpaper-container.dark .stand-boy {
+  opacity: 1;
+}
+
+.house {
+  position: absolute;
+  bottom: 4%;
+  right: -10%;
+  width: 167px;
+  height: 180px;
+  background: url("img/house1.png") no-repeat center center / contain;
+  filter: brightness(0.1);
+  transition: filter 1s linear 0.4s;
+}
+
+.wallpaper-container.dark .house {
+  filter: brightness(0.8);
+}
+
+.moon {
+  position: absolute;
+  top: 40px;
+  left: 105%;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: url("img/moon2.png") no-repeat center center / 109%;
+  box-shadow: 0 0 10px var(--moon-light), 0 0 20px var(--moon-light),
+    0 0 30px var(--moon-light), 0 0 40px var(--moon-light);
+  transition: left 1s ease-in, box-shadow 1s linear; 
+}
+
+.wallpaper-container.dark .moon {
+  left: 58%; 
+  transition: left 1s ease-out 1s, box-shadow 1s linear 0.5s;
+  box-shadow: 0 0 10px 6px var(--moon-light), 0 0 20px var(--moon-light),
+    0 0 30px var(--moon-light), 0 0 50px var(--moon-light),
+    0 0 60px var(--moon-light), 0 0 70px var(--moon-light),
+    0 0 80px var(--moon-light), 0 0 90px var(--moon-light),
+    inset 0 0 90px #fff;
+}
+
+/* --- Main Styles --- */
+nav {
+  height: 60px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.links-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 10px;
+  transition: left 0.75s ease-in-out; /* Add transition for sidebar */
+}
+
+nav a {
+  text-decoration: none;
+  height: 100%;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+  -webkit-tap-highlight-color: transparent;
+}
+
+nav a:hover {
+  color: var(--accent-color);
+}
+
+nav svg {
+  fill: var(--text-color);
+  margin-right: 10px;
+}
+
+#sidebar-active {
+  display: none;
+}
+
+.open-sidebar-button,
+.close-sidebar-button {
+  display: none;
+}
+
+body {
+  background-color: var(--bg-color);
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1; /* Ensure Calendar is above wallpaper */
+  flex-direction: column; /* Stack calendar vertically on smaller screens */
+}
+
+.calender {
+  width: 90%; /* Adjust calendar width for smaller screens */
+  max-width: 600px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 5px 5px 10px 1px #000000;
+}
+
+.calender .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--fade-color);
+}
+
+.calender .header .month {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.calender .header .btns {
+  display: flex;
+  gap: 20px;
+}
+
+.calender .header .btns .btn {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  color: var(--text-color);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.calender .header .btns .btn:hover {
+  background-color: var(--primary-color);
+  transform: scale(1.1);
+  box-shadow: 0 2px 5px var(--boxx-coloor);
+  color: var(--fade-color);
+}
+
+.weekdays {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.weekdays .day {
+  width: calc(100% / 7 - 10px);
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.days .day {
+  width: calc(100% / 7 - 10px);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-color);
+  transition: all 0.3s;
+}
+
+.days .day:hover {
+  color: var(--week);
+  background-color: var(--primary-color);
+  transform: scale(1);
+}
+
+.days .day.today {
+  color: var(--week);
+  background-color: var(--primary-color);
+}
+
+.day.HolyDay {
+  background-color: #05b91a;
+  color: #ffffff;
+}
+
+.day.Coff {
+  background-color: #0df1f1;
+  color: #000000;
+}
+
+.day.shutdown {
+  background-color: #fd0404;
+  color: #ffffff;
+}
+
+.day.Cwork {
+  background-color: #ffff00;
+  color: #000000;
+}
+
+.day.weeklyholiday {
+  background-color: #ac2424;
+  color: #ffffff;
+}
+.day.Annualday { background-color: #fa6e03; color: #000000}
+
+
+.days .day.next,
+.days .day.prev {
+  opacity: 0.5;
+  color: var(--fade-color);
+}
+
+.credits {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--fade-color);
+  text-decoration: none;
+}
+
+.credits a {
+  color: white;
+  text-decoration: none;
+}
+.credits svg {
+  transform: translate(0%, 35%);
+}
+/* Dark mode */
+.theme-switch {
+  height: 30px;
+  width: 30px;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  color: var(--calender);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-switch {
+  fill: var(--primary-color);
+}
+
+.theme-switch svg:last-child {
+  display: none;
+}
+
+.dark .theme-switch svg:first-child {
+  display: none;
+}
+
+.dark .theme-switch svg:last-child {
+  display: block;
+}
+
+.prevent-select {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Chrome/Safari/Opera */
+  -khtml-user-select: none;
+  /* Konqueror */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently supported by Chrome and Safari */
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reason {
+  display: none;
+  /* Initially hidden */
+  position: absolute;
+  width: 90%;
+  max-width: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(10px);
+  box-shadow: 5px 5px 10px 1px #000000;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--text-color);
+  z-index: 7;
+  /* Ensure it's above other elements */
+}
+
+.reason .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s;
+  padding-bottom: 5px;
+  font-size: 30px;
+  border-bottom: 1px solid var(--fade-color);
+  position: relative;
+}
+
+.reason .header .btns {
+  display: flex;
+  gap: 10px;
+}
+
+.reason .header .btns .x-btn {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  color: var(--text-color);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  -webkit-tap-highlight-color: transparent;
+}
+.reason svg {
+  fill: var(--text-color);
+}
+.cause {
+  font-size: 16px;
+  transition: all 0.3s;
+  font-weight: 600;
+  color: var(--text-color);
+  transform: translate(0px, 10px);
+  margin-bottom: 10px;
+  position: relative;
+  /* Reset position */
+  top: auto;
+  /* Reset top */
+  left: auto;
+  /* Reset left */
+  width: auto;
+  /* Reset width */
+}
+
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #020202;
+  /* Set your desired background color */
+  z-index: 9999;
+  /* Ensure it's on top of other elements */
+  animation: fadeOut 2s 2s forwards;
+  /* Adjust animation duration as needed */
+}
+
+.splash-logo {
+  /* Style your logo as needed */
+  width: 200px;
+  /* Adjust logo size */
+  animation: scaleUp 2s forwards;
+  /* Example animation, adjust as needed */
+}
+.mini {
+  display: flex;
+  /* Initially hidden */
+  flex-direction: column;
+  position: absolute;
+  width: 90%;
+  max-width: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -35%);
+  backdrop-filter: blur(10px);
+  box-shadow: 5px 5px 10px 1px #000000;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--text-color);
+  z-index: 9;
+  /* Ensure it's above other elements */
+}
+.minicalendar{
+  margin-top: 50%;
+}
+.mini .header {
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s;
+  padding-bottom: 5px;
+  font-size: 23px;
+  border-bottom: 1px solid var(--fade-color);
+  position: relative;
+}
+.minicalendar .calendar-content {
+  margin-top: 50px;
+}
+iframe {
+    background: transparent;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.8);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+/* ... existing styles ... */
+/* ... (Your existing CSS code) ... */
+
+/* Skeleton Loader Styles */
+.skeleton-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent; /* Match background color with your app */
+  z-index: 10; /* Ensure it's above the calendar content */
+  pointer-events: none; /* Prevent user interaction while loading */
+}
+
+/* Hide the real content initially */
+.calender > .header, .calender > .weekdays, .calender > .days {
+  visibility: hidden; /* Use visibility instead of display to maintain layout */
+}
+
+.skeleton-header, .skeleton-weekdays, .skeleton-days {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.skeleton-month, .skeleton-btn, .skeleton-day {
+  background: #ffffff78;
+  background-size: 500px 100%; /* Adjust for desired shimmer width */
+  border-radius: 5px;
+  animation: shimmer 1.5s linear infinite;
+}
+
+.skeleton-month {
+  width: 150px;
+  height: 30px;
+}
+
+.skeleton-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; /* Maintain button shape */
+}
+
+.skeleton-day {
+  width: calc(100% / 7 - 10px);
+  height: 40px;
+  border-radius: 50%; /* Maintain day shape */
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -500px 0;
+  }
+  100% {
+    background-position: 500px 0;
+  }
+}
+
+/* ... (Rest of your CSS code) ... */
+
+
+@media only screen and (max-width: 600px) {
+  
+
+  .mini {
+    /* ... (Other styles) ... */
+    height: 70vh;  /* Adjust this value as needed */
+    z-index: 8; 
+  }
+
+  /* ... (Other styles) ... */
+
+  .mini .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Optional: vertically center aligns the items */
+  width: 100%;
+}
+.mini .header .close-btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  color: var(--text-color);
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s;
+  -webkit-tap-highlight-color: transparent;
+}
+#minicalendar2024 .calender {
+  font-size: 12px; /* Reduce the overall font size */
+  padding: 5px;   /* Reduce padding */
+  
+}
+
+#minicalendar2024 .header {
+  font-size: 16px; /* Reduce header font size */
+  margin-bottom: 15px; /* Reduce margin */
+}
+
+#minicalendar2024 .days .day {
+  height: 25px; /* Reduce day height */
+  font-size: 10px; /* Reduce day font size */
+}
+iframe {
+      background: transparent;
+      border-radius: 10px;
+      transform: translate(-1%, -32%);
+      height: 60vh;
+      overflow: hidden;
+      -webkit-overflow-scrolling: touch;  /* Content ko scroll karne ke liye bina scrollbar ke */
+}
+
+
+nav {
+    height: 60px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .open-sidebar-button {
+    position: relative; /* Add position for z-index */
+    z-index: 9; /* Ensure button is above the overlay */
+    background-color: none;
+    bottom: 59%;
+    right: 290%;
+  }
+
+  .links-container {
+    flex-direction: column;
+    align-items: flex-start;
+    position: fixed;
+    top: 0;
+    left: -100%; /* Initially hide off-screen */
+    z-index: 11;
+    width: 200px;
+    max-height: 91.5%;
+    backdrop-filter: blur(10px);
+    transform: translate(0px, 145px);
+    box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.25);
+  }
+  .links-container .header {
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    align-items: center;  /* Optional: Vertically align the buttons */
+
+    }
+
+  nav a {
+    box-sizing: border-box;
+    height: auto;
+    width: 100%;
+    padding: 20px 30px;
+    justify-content: flex-start;
+  }
+
+  .open-sidebar-button,
+  .close-sidebar-button {
+    display: block;
+    padding: 5px;
+  }
+
+  #sidebar-active:checked~.links-container {
+    left: 2%;
+  }
+
+  #sidebar-active:checked~#overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;/* Dimmed background */
+    z-index: 9;
+  }
+
+  /* --- Calendar Mobile Styles --- */
+  .days .day {
+    width: calc(100% / 7 - 10px);
+    height: 31px;
+    font-size: 14px;
+  }
+
+  .container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    transform: translate(-0px, -160px);
+  }
+
+  .fullscreen {
+    height: 100dvh;
+  }
+
+  .calender {
+    width: 90%;
+    max-width: 100%;
+    transform: translate(0px, -15px);
+    backdrop-filter: blur(10px);
+  }
+
+  .calender .header .month {
+    font-size: 16px;
+  }
+
+  .calender .header .btns {
+    gap: 10px;
+  }
+
+  .calender .header .btns .btn {
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+  }
+
+  .weekdays .day {
+    font-size: 14px;
+  }
+
+  .credits {
+    transform: translate(0px, -70px);
+    font-size: 12px; /* Adjust font size for credits */
+    color: var(--text-color);
+    text-decoration: none;
+  }
+
+  .reason {
+    width: 90%;
+    /* Adjust width as needed */
+    max-width: 100%;
+    /* Adjust max-width as needed */
+    padding: 8px;
+    /* Reduce padding */
+    margin-top: 70%;
+    backdrop-filter: blur(10px);
+  }
+
+  .reason .header {
+    font-size: 24px;
+    /* Reduce font size */
+  }
+
+  .cause {
+    font-size: 14px;
+    /* Reduce font size */
+  }
+
+  /* ... (Other mobile-specific styles for wallpaper elements) ... */
+
+  .cloud-container div:nth-child(1) {
+    top: 8%;
+    left: 5%;
+    opacity: 0.2;
+  }
+
+  .cloud-container div:nth-child(2) {
+    top: 28%;
+    left: 45%;
+  }
+
+  .cloud-container div:nth-child(3) {
+    top: 14%;
+    left: 20%;
+  }
+
+  .cloud-container div:nth-child(4) {
+    top: 18%;
+    left: -1%;
+  }
+
+  .cloud-container div:nth-child(5) {
+    top: 34%;
+    left: 68%;
+  }
+
+  .cloud-container div:nth-child(6) {
+    top: 26%;
+    left: 80%;
+    opacity: 0.3;
+  }
+
+  .bird-1 {
+    top: -5%;
+    left: 5%;
+  }
+
+  .bird-2 {
+    top: 18%;
+    left: 50%;
+  }
+
+  .bat-1 {
+    top: 24%;
+    left: 66%;
+  }
+
+  .bat-3 {
+    top: 14%;
+    left: 36%;
+  }
+}
