@@ -1,0 +1,79 @@
+{
+    "name": "Co. Cal",
+    "short_name": "Co. Cal",
+    "start_url": "./index.html",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "purpose": "any",
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "id": "CalendarRST",
+
+  "icons": [
+    {
+      "src": "f.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "d.png",
+      "sizes": "512x512", 
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "e.png",
+      "sizes": "256x256", 
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "d.png",
+      "purpose": "monochrome maskable",
+      "sizes": "512x512", 
+      "type": "image/png"
+      
+    }
+  ],
+
+  
+    "screenshots": [
+      {
+        "src": "desk.png",
+        "sizes": "1280x800",
+        "type": "image/png",
+        "form_factor": "wide"
+      },
+      {
+        "src": "night.png",
+        "sizes": "1080x2340",
+        "type": "image/png"
+      },
+      {
+        "src": "day.png",
+        "sizes": "1080x2340",
+        "type": "image/png"
+      },
+      {
+        "src": "nightnav.png",
+        "sizes": "1080x2340",
+        "type": "image/png"
+      },
+      {
+        "src": "d24.png",
+        "sizes": "1080x2340",
+        "type": "image/png"
+      },
+      {
+        "src": "n24.png",
+        "sizes": "1080x2340",
+        "type": "image/png"
+      }
+    ],
+    "display_override": ["window-controls-overlay"]
+  
+  
+   
+}

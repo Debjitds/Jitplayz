@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="switch" href="switch.html">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <title>Callender</title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+:root {
+    --primary-color: #0a0af9;
+    --calender:#fdfcfc;
+    --fade-color: #ccc;
+    --boxx-coloor: rgba(0,0,0,0.1);
+    --week: #fdfcfc;
+    --color-1: #ffffff;
+    --text-color: #ffffff;
+    --accent-color: #006aff;
+}
+
+.dark {
+    --primary-color: #0a0af9;
+    --text-color: #ffffff;
+    --calender:#212121;
+    --fade-color: #ccc;
+    --boxx-coloor: rgba(0,0,0,0.1);
+    --week: #fdfcfc;
+    --color-1: #000000;
+    --accent-color: #006aff;
+
+
+}
+*{
+    margin-top: 5px;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: transparent;
+    -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    body::-webkit-scrollbar {
+        display: none;  /* Chrome, Safari and Opera */
+    }
+
+
+.calender {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: transparent;
+    box-shadow: 0 5px 10px 0 var(--boxx-coloor);
+
+}
+
+.calender .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    color: var(--text-color);
+    border-bottom: 2px solid var(--text-color);
+}
+
+.calender .header .month {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+
+.weekdays {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.weekdays .day {
+    width: calc(100% / 7 - 10px);
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.days {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.days .day {
+    width: calc(100% / 7 - 10px);
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-color);
+    transition: all 0.3s;
+}
+
+.days .day.today{
+    color: var(--week);
+    background-color: var(--primary-color);
+}
+.day.HolyDay { background-color: #05b91a; color: #ffffff; } 
+    .day.Coff { background-color: #0df1f1; color: #000000; }   
+    .day.shutdown { background-color: #fd0404; color: #ffffff;}  
+    .day.Cwork { background-color: #ffff00; color: #000000;} 
+    .day.weeklyholiday { background-color: #ac2424; color: #ffffff;} 
+    .day.Annualday { background-color: #fa6e03; color: #000000}
+
+
+.days .day.next,
+ .days .day.prev{
+    opacity: 0.5;
+    color: var(--fade-color);
+}
+
+
+
+.prevent-select {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Safari */
+    
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+
+
+    body {
+        background-color: transparent;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: sans-serif; /* Add a default font */
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    body::-webkit-scrollbar {
+        display: none;  /* Chrome, Safari and Opera */
+    }
+    
+    .fullscreen {
+        height: 100dvh;
+    }
+    
+    /* Calendar Container */
+    .calender {
+        width: 42%; /* Reduced width for smaller size */
+        max-width: 300px; /* Reduced max-width for smaller size */
+        padding: 3px 10px; /* Reduced padding for smaller size */
+        border-radius: 10px;
+        background-color: transparent;
+        box-shadow: 3px 3px 6px 0.5px #000000; /* Reduced shadow size */
+        margin: 0.5rem 0.6rem; /* Reduced margin for smaller size */ 
+        display: inline-block; /* Allow calendars to sit side-by-side */
+        vertical-align: top; /* Align calendars to the top */
+    }
+    
+    /* Header Styling */
+    .calender .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3px; /* Reduced margin for smaller size */
+        padding-bottom: 2px; /* Reduced padding for smaller size */
+        color: var(--text-color);
+        border-bottom: 1px solid var(--text-color); /* Thinner border */
+    }
+    
+    .calender .header .month {
+        display: flex;
+        align-items: center;
+        font-size: 0.8em; /* Reduced font size */
+        font-weight: 600;
+        color: var(--text-color);
+    }
+    
+    /* Weekday Styling */
+    .weekdays {
+        display: flex;
+        gap: 5px; /* Reduced gap for smaller size */
+        margin-bottom: 5px; /* Reduced margin for smaller size */
+        color: var(--text-color);
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .weekdays .day {
+        width: calc(100% / 7 - 5px); /* Reduced width for smaller size */
+        text-align: center;
+        font-size: 0.1em; /* Reduced font size */
+        font-weight: 600;
+    }
+    
+    /* Days Container */
+    .days {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px; /* Reduced gap for smaller size */
+    }
+    
+    /* Day Styling */
+    .days .day {
+        width: calc(100% / 7 - 5px); /* Reduced width for smaller size */
+        height: 10px; /* Reduced height for smaller size */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50px;
+        font-size: 0.4em; /* Reduced font size */
+        font-weight: 400;
+        color: var(--text-color);
+        transition: all 0.3s;
+    }
+    
+    /* Hover and Active States */
+    
+    .days .day.today {
+        color: var(--week);
+        background-color: var(--primary-color);
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Special Day Styling */
+    .day.HolyDay { background-color: #05b91a; color: #ffffff; } 
+    .day.Coff { background-color: #0df1f1; color: #000000; }   
+    .day.shutdown { background-color: #fd0404; color: #ffffff;}  
+    .day.Cwork { background-color: #ffff00; color: #000000;} 
+    .day.weeklyholiday { background-color: #ac2424; color: #ffffff;} 
+    .day.Annualday { background-color: #fa6e03; color: #000000}
+
+    
+    /* Previous/Next Day Styling */
+    .days .day.next,
+    .days .day.prev{
+        opacity: 0.5;
+        color: var(--fade-color);
+        -webkit-tap-highlight-color: transparent;
+    }}
+
+
+    </style>
+</head>
+<body>
+    <div class="prevent-select">
+    <div class="fullscreen">
+        <div class="calender">
+            <div class="header">Jan
+                <div class="month"></div>
+            </div>
+            <div class="weekdays">
+                <div class="day">Sun</div>
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+            </div>
+            <div class="days">
+                 <!-- current month days -->
+                 <div class="day weeklyholiday">1</div>
+                 <div class="day">2</div>
+                 <div class="day">3</div>
+                 <div class="day">4</div>
+                 <div class="day">5</div>
+                 <div class="day">6</div>
+                 <div class="day">7</div>
+                 <div class="day weeklyholiday">8</div>
+                 <div class="day">9</div>
+                 <div class="day">10</div>
+                 <div class="day">11</div>
+                 <div class="day">12</div>
+                 <div class="day">13</div>
+                 <div class="day">14</div>
+                 <div class="day weeklyholiday">15</div>
+                 <div class="day">16</div>
+                 <div class="day">17</div>
+                 <div class="day">18</div>
+                 <div class="day">19</div>
+                 <div class="day">20</div>
+                 <div class="day">21</div>
+                 <div class="day weeklyholiday">22</div>
+                 <div class="day">23</div>
+                 <div class="day">24</div>
+                 <div class="day">25</div>
+                 <div class="day HolyDay">26</div>
+                 <div class="day ">27</div>
+                 <div class="day ">28</div>
+                 <div class="day weeklyholiday">29</div>
+                 <div class="day">30</div> 
+                 <div class="day">31</div> 
+
+                 <!-- next month days -->
+            </div>
+        </div>
+        <div class="calender">
+            <div class="header">Feb 
+                <div class="month"></div>
+            </div>
+            <div class="weekdays">
+                <div class="day">Sun</div>
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+            </div>
+            <div class="days">
+             <!-- Lets add days using js-->
+                 <!-- previous month days -->
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <!-- current month days -->
+                 <div class="day">1</div>
+                 <div class="day">2</div>
+                 <div class="day">3</div>
+                 <div class="day">4</div>
+                 <div class="day weeklyholiday">5</div>
+                 <div class="day">6</div>
+                 <div class="day">7</div>
+                 <div class="day">8</div>
+                 <div class="day">9</div>
+                 <div class="day ">10</div>
+                 <div class="day">11</div>
+                 <div class="day weeklyholiday">12</div>
+                 <div class="day">13</div>
+                 <div class="day">14</div>
+                 <div class="day">15</div>
+                 <div class="day">16</div>
+                 <div class="day">17</div>
+                 <div class="day">18</div>
+                 <div class="day Annualday">19</div>
+                 <div class="day HolyDay">20</div>
+                 <div class="day">21</div>
+                 <div class="day">22</div>
+                 <div class="day">23</div>
+                 <div class="day">24</div>
+                 <div class="day">25</div>
+                 <div class="day weeklyholiday">26</div>
+                 <div class="day">27</div>
+                 <div class="day">28</div>
+                 <div class="day">29</div>
+            </div>
+        </div>
+        <div class="calender">
+            <div class="header">Mar 
+                <div class="month"></div>
+            </div>
+            <div class="weekdays">
+                <div class="day">Sun</div>
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+            </div>
+            <div class="days">
+             <!-- Lets add days using js-->
+                 <!-- previous month days -->
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+
+                 <!-- current month days -->
+                 <div class="day">1</div>
+                 <div class="day">2</div>
+                 <div class="day">3</div>
+                 <div class="day">4</div>
+                 <div class="day Cwork">5</div>
+                 <div class="day">6</div>
+                 <div class="day Coff">7</div>
+                 <div class="day HolyDay">8</div>
+                 <div class="day HolyDay">9</div>
+                 <div class="day ">10</div>
+                 <div class="day">11</div>
+                 <div class="day weeklyholiday">12</div>
+                 <div class="day">13</div>
+                 <div class="day">14</div>
+                 <div class="day">15</div>
+                 <div class="day">16</div>
+                 <div class="day">17</div>
+                 <div class="day">18</div>
+                 <div class="day weeklyholiday">19</div>
+                 <div class="day">20</div>
+                 <div class="day">21</div>
+                 <div class="day">22</div>
+                 <div class="day">23</div>
+                 <div class="day">24</div>
+                 <div class="day ">25</div>
+                 <div class="day weeklyholiday">26</div>
+                 <div class="day">27</div>
+                 <div class="day">28</div>
+                 <div class="day">29</div>
+                 <div class="day">30</div>
+                 <div class="day">31</div>
+
+                 <!-- next month days -->
+            </div>
+        </div>
+        <div class="calender">
+            <div class="header">Apr 
+                <div class="month"></div>
+            </div>
+            <div class="weekdays">
+                <div class="day">Sun</div>
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+            </div>
+            <div class="days">
+             <!-- Lets add days using js-->
+                 <!-- previous month days -->
+                 <div class="day weeklyholiday">30</div>
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <!-- current month days -->
+                 <div class="day">1</div>
+                 <div class="day weeklyholiday">2</div>
+                 <div class="day">3</div>
+                 <div class="day">4</div>
+                 <div class="day">5</div>
+                 <div class="day">6</div>
+                 <div class="day">7</div>
+                 <div class="day">8</div>
+                 <div class="day weeklyholiday">9</div>
+                 <div class="day">10</div>
+                 <div class="day">11</div>
+                 <div class="day">12</div>
+                 <div class="day">13</div>
+                 <div class="day HolyDay">14</div>
+                 <div class="day Coff">15</div>
+                 <div class="day Cwork">16</div>
+                 <div class="day">17</div>
+                 <div class="day">18</div>
+                 <div class="day">19</div>
+                 <div class="day">20</div>
+                 <div class="day">21</div>
+                 <div class="day HolyDay">22</div>
+                 <div class="day weeklyholiday">23</div>
+                 <div class="day">24</div>
+                 <div class="day">25</div>
+                 <div class="day">26</div>
+                 <div class="day">27</div>
+                 <div class="day">28</div>
+                 <div class="day">29</div>
+            </div>
+        </div>
+        <div class="calender">
+            <div class="header">May 
+                <div class="month"></div>
+            </div>
+            <div class="weekdays">
+                <div class="day">Sun</div>
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+            </div>
+            <div class="days">
+             <!-- Lets add days using js-->
+                 <!-- previous month days -->
+                 <div class="day prev"></div>
+                 <!-- current month days -->
+                 <div class="day">1</div>
+                 <div class="day">2</div>
+                 <div class="day">3</div>
+                 <div class="day">4</div>
+                 <div class="day">5</div>
+                 <div class="day">6</div>
+                 <div class="day weeklyholiday">7</div>
+                 <div class="day">8</div>
+                 <div class="day">9</div>
+                 <div class="day">10</div>
+                 <div class="day">11</div>
+                 <div class="day">12</div>
+                 <div class="day">13</div>
+                 <div class="day weeklyholiday">14</div>
+                 <div class="day">15</div>
+                 <div class="day">16</div>
+                 <div class="day">17</div>
+                 <div class="day ">18</div>
+                 <div class="day">19</div>
+                 <div class="day">20</div>
+                 <div class="day weeklyholiday">21</div>
+                 <div class="day">22</div>
+                 <div class="day">23</div>
+                 <div class="day">24</div>
+                 <div class="day">25</div>
+                 <div class="day">26</div>
+                 <div class="day">27</div>
+                 <div class="day weeklyholiday">28</div>
+                 <div class="day">29</div>
+                 <div class="day">30</div>
+                 <div class="day">31</div>
+            </div>
+        </div>
+        <div class="calender">
+            <div class="header">Jun 
+                <div class="month"></div>
+            </div>
+            <div class="weekdays">
+                <div class="day">Sun</div>
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+            </div>
+            <div class="days">
+             <!-- Lets add days using js-->
+                 <!-- previous month days -->
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+
+                 <!-- current month days -->
+                 <div class="day">1</div>
+                 <div class="day">2</div>
+                 <div class="day">3</div>
+                 <div class="day weeklyholiday">4</div>
+                 <div class="day">5</div>
+                 <div class="day">6</div>
+                 <div class="day">7</div>
+                 <div class="day">8</div>
+                 <div class="day">9</div>
+                 <div class="day">10</div>
+                 <div class="day weeklyholiday">11</div>
+                 <div class="day shutdown">12</div>
+                 <div class="day shutdown">13</div>
+                 <div class="day shutdown">14</div>
+                 <div class="day shutdown">15</div>
+                 <div class="day shutdown">16</div>
+                 <div class="day shutdown">17</div>
+                 <div class="day weeklyholiday">18</div>
+                 <div class="day">19</div>
+                 <div class="day">20</div>
+                 <div class="day">21</div>
+                 <div class="day">22</div>
+                 <div class="day">23</div>
+                 <div class="day">24</div>
+                 <div class="day weeklyholiday">25</div>
+                 <div class="day">26</div>
+                 <div class="day">27</div>
+                 <div class="day">28</div>
+                 <div class="day">29</div>
+                 <div class="day">30</div>
+                 <div class="day">31</div>
+
+            </div>
+        </div>
+        <div class="calender">
+            <div class="header">Jul 
+                <div class="month"></div>
+            </div>
+            <div class="weekdays">
+                <div class="day">Sun</div>
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+            </div>
+            <div class="days">
+             <!-- Lets add days using js-->
+                 <!-- previous month days -->
+                 <div class="day weeklyholiday">30</div>
+                 <div class="day">31</div>
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <!-- current month days -->
+                 <div class="day">1</div>
+                 <div class="day weeklyholiday">2</div>
+                 <div class="day">3</div>
+                 <div class="day">4</div>
+                 <div class="day">5</div>
+                 <div class="day">6</div>
+                 <div class="day">7</div>
+                 <div class="day">8</div>
+                 <div class="day weeklyholiday">9</div>
+                 <div class="day">10</div>
+                 <div class="day">11</div>
+                 <div class="day">12</div>
+                 <div class="day">13</div>
+                 <div class="day">14</div>
+                 <div class="day">15</div>
+                 <div class="day weeklyholiday">16</div>
+                 <div class="day">17</div>
+                 <div class="day">18</div>
+                 <div class="day">19</div>
+                 <div class="day">20</div>
+                 <div class="day">21</div>
+                 <div class="day">22</div>
+                 <div class="day weeklyholiday">23</div>
+                 <div class="day">24</div>
+                 <div class="day">25</div>
+                 <div class="day">26</div>
+                 <div class="day">27</div>
+                 <div class="day">28</div>
+                 <div class="day">29</div>
+            </div>
+        </div>
+        <div class="calender">
+            <div class="header">Aug 
+                <div class="month"></div>
+            </div>
+            <div class="weekdays">
+                <div class="day">Sun</div>
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+            </div>
+            <div class="days">
+             <!-- Lets add days using js-->
+                 <!-- previous month days -->
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <!-- current month days -->
+                 <div class="day">1</div>
+                 <div class="day">2</div>
+                 <div class="day">3</div>
+                 <div class="day">4</div>
+                 <div class="day">5</div>
+                 <div class="day weeklyholiday">6</div>
+                 <div class="day">7</div>
+                 <div class="day">8</div>
+                 <div class="day">9</div>
+                 <div class="day">10</div>
+                 <div class="day">11</div>
+                 <div class="day">12</div>
+                 <div class="day weeklyholiday">13</div>
+                 <div class="day">14</div>
+                 <div class="day HolyDay">15</div>
+                 <div class="day">16</div>
+                 <div class="day">17</div>
+                 <div class="day">18</div>
+                 <div class="day ">19</div>
+                 <div class="day weeklyholiday">20</div>
+                 <div class="day">21</div>
+                 <div class="day">22</div>
+                 <div class="day">23</div>
+                 <div class="day">24</div>
+                 <div class="day">25</div>
+                 <div class="day ">26</div>
+                 <div class="day weeklyholiday">27</div>
+                 <div class="day">28</div>
+                 <div class="day">29</div>
+                 <div class="day HolyDay">30</div>
+                 <div class="day">31</div>
+            </div>
+        </div>
+        <div class="calender">
+            <div class="header">Sep 
+                <div class="month"></div>
+            </div>
+            <div class="weekdays">
+                <div class="day">Sun</div>
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+            </div>
+            <div class="days">
+             <!-- Lets add days using js-->
+                 <div class="day"></div>
+                 <div class="day"></div>
+                 <div class="day"></div>
+                 <div class="day"></div>
+                 <div class="day"></div>
+
+                 <!-- current month days -->
+                 <div class="day">1</div>
+                 <div class="day">2</div>
+                 <div class="day weeklyholiday">3</div>
+                 <div class="day">4</div>
+                 <div class="day">5</div>
+                 <div class="day">6</div>
+                 <div class="day HolyDay">7</div>
+                 <div class="day">8</div>
+                 <div class="day">9</div>
+                 <div class="day weeklyholiday">10</div>
+                 <div class="day">11</div>
+                 <div class="day">12</div>
+                 <div class="day">13</div>
+                 <div class="day">14</div>
+                 <div class="day">15</div>
+                 <div class="day ">16</div>
+                 <div class="day weeklyholiday">17</div>
+                 <div class="day">18</div>
+                 <div class="day">19</div>
+                 <div class="day">20</div>
+                 <div class="day">21</div>
+                 <div class="day">22</div>
+                 <div class="day">23</div>
+                 <div class="day weeklyholiday">24</div>
+                 <div class="day">25</div>
+                 <div class="day">26</div>
+                 <div class="day">27</div>
+                 <div class="day">28</div>
+                 <div class="day">29</div>
+                 <div class="day">30</div>
+                 
+            </div>
+        </div>
+        <div class="calender">
+            <div class="header">Oct 
+                <div class="month"></div>
+            </div>
+            <div class="weekdays">
+                <div class="day">Sun</div>
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+            </div>
+            <div class="days">
+             <!-- Lets add days using js-->
+                 <!-- previous month days -->
+                 <!-- current month days -->
+                 <div class="day weeklyholiday">1</div>
+                 <div class="day HolyDay">2</div>
+                 <div class="day">3</div>
+                 <div class="day">4</div>
+                 <div class="day">5</div>
+                 <div class="day">6</div>
+                 <div class="day">7</div>
+                 <div class="day weeklyholiday">8</div>
+                 <div class="day">9</div>
+                 <div class="day">10</div>
+                 <div class="day">11</div>
+                 <div class="day ">12</div>
+                 <div class="day">13</div>
+                 <div class="day">14</div>
+                 <div class="day weeklyholiday">15</div>
+                 <div class="day">16</div>
+                 <div class="day">17</div>
+                 <div class="day">18</div>
+                 <div class="day">19</div>
+                 <div class="day">20</div>
+                 <div class="day">21</div>
+                 <div class="day weeklyholiday">22</div>
+                 <div class="day">23</div>
+                 <div class="day HolyDay">24</div>
+                 <div class="day">25</div>
+                 <div class="day">26</div>
+                 <div class="day">27</div>
+                 <div class="day">28</div>
+                 <div class="day weeklyholiday">29</div>
+                 <div class="day">30</div>
+                 <div class="day ">31</div>
+            </div>
+        </div>
+        <div class="calender">
+            <div class="header">Nov 
+                <div class="month"></div>
+            </div>
+            <div class="weekdays">
+                <div class="day">Sun</div>
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+            </div>
+            <div class="days">
+             <!-- Lets add days using js-->
+                 <!-- previous month days -->
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <div class="day prev"></div>
+                 <!-- current month days -->
+                 <div class="day HolyDay">1</div>
+                 <div class="day ">2</div>
+                 <div class="day">3</div>
+                 <div class="day">4</div>
+                 <div class="day Cwork">5</div>
+                 <div class="day">6</div>
+                 <div class="day">7</div>
+                 <div class="day">8</div>
+                 <div class="day">9</div>
+                 <div class="day">10</div>
+                 <div class="day Coff">11</div>
+                 <div class="day weeklyholiday">12</div>
+                 <div class="day HolyDay">13</div>
+                 <div class="day HolyDay">14</div>
+                 <div class="day ">15</div>
+                 <div class="day ">16</div>
+                 <div class="day ">17</div>
+                 <div class="day">18</div>
+                 <div class="day weeklyholiday">19</div>
+                 <div class="day">20</div>
+                 <div class="day">21</div>
+                 <div class="day">22</div>
+                 <div class="day">23</div>
+                 <div class="day">24</div>
+                 <div class="day">25</div>
+                 <div class="day weeklyholiday">26</div>
+                 <div class="day HolyDay">27</div>
+                 <div class="day">28</div>
+                 <div class="day">29</div>
+                 <div class="day">30</div>
+            </div>
+        </div>
+        <div class="calender">
+            <div class="header">Dec 
+                <div class="month"></div>
+            </div>
+            <div class="weekdays">
+                <div class="day">Sun</div>
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+            </div>
+            <div class="days">
+             <!-- Lets add days using js-->
+             <div class="day weeklyholiday">31</div>
+             <div class="day prev"></div>
+             <div class="day prev"></div>
+             <div class="day prev"></div>
+             <div class="day prev"></div>
+
+                 <!-- current month days -->
+                 <div class="day">1</div>
+                 <div class="day">2</div>
+                 <div class="day weeklyholiday">3</div>
+                 <div class="day">4</div>
+                 <div class="day">5</div>
+                 <div class="day">6</div>
+                 <div class="day">7</div>
+                 <div class="day">8</div>
+                 <div class="day">9</div>
+                 <div class="day weeklyholiday">10</div>
+                 <div class="day">11</div>
+                 <div class="day">12</div>
+                 <div class="day">13</div>
+                 <div class="day">14</div>
+                 <div class="day">15</div>
+                 <div class="day">16</div>
+                 <div class="day weeklyholiday">17</div>
+                 <div class="day">18</div>
+                 <div class="day">19</div>
+                 <div class="day">20</div>
+                 <div class="day">21</div>
+                 <div class="day">22</div>
+                 <div class="day">23</div>
+                 <div class="day weeklyholiday">24</div>
+                 <div class="day shutdown">25</div>
+                 <div class="day shutdown">26</div>
+                 <div class="day shutdown">27</div>
+                 <div class="day shutdown">28</div>
+                 <div class="day shutdown">29</div>
+                 <div class="day shutdown">30</div>
+                
+            </div>
+        </div>
+
+        
+    
+</div>
+
+</div>
+
+</div>
+</body>
+</html>
