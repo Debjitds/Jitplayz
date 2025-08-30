@@ -1,5 +1,5 @@
 // Cache version name in quotes (string format)
-const CACHE_NAME = 'calendar-app-cache-v7';
+const CACHE_NAME = 'calendar-app-cache-v8';
 
 // Add all important resources that should work offline
 const urlsToCache = [
@@ -53,7 +53,7 @@ self.addEventListener('activate', (event) => {
       .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((name) => {
-            if (name !== 'calendar-app-cache-v6') {
+            if (name !== 'calendar-app-cache-v7') {
               console.log('[Service Worker] Deleting old cache:', name);
               return caches.delete(name);
             }
@@ -86,7 +86,7 @@ self.addEventListener('fetch', (event) => {
             const responseToCache = response.clone();
 
             // Add new resource to cache
-            caches.open('calendar-app-cache-v7')
+            caches.open('calendar-app-cache-v8')
               .then((cache) => {
                 cache.put(event.request, responseToCache);
               });
@@ -95,4 +95,5 @@ self.addEventListener('fetch', (event) => {
           });
       })
   );
+
 });
