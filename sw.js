@@ -1,5 +1,5 @@
 // Cache version name in quotes (string format)
-const CACHE_NAME = 'calendar-app-cache-v8';
+const CACHE_NAME = 'calendar-app-cache-v9';
 
 // Add all important resources that should work offline
 const urlsToCache = [
@@ -22,7 +22,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
   
   event.waitUntil(
-    caches.open('calendar-app-cache-v7')
+    caches.open('calendar-app-cache-v8')
       .then((cache) => {
         console.log('[Service Worker] Caching resources');
         return cache.addAll([
@@ -86,7 +86,7 @@ self.addEventListener('fetch', (event) => {
             const responseToCache = response.clone();
 
             // Add new resource to cache
-            caches.open('calendar-app-cache-v8')
+            caches.open('calendar-app-cache-v9')
               .then((cache) => {
                 cache.put(event.request, responseToCache);
               });
@@ -97,3 +97,4 @@ self.addEventListener('fetch', (event) => {
   );
 
 });
+
